@@ -15,5 +15,5 @@ public class BookForm {
 	@NotEmpty(message = "Paramètres non renseigné")
 	private String nom_livre;
 	private long nb_exemplaires;
-	private AuthorForm author;
+	private long author_id;
 }

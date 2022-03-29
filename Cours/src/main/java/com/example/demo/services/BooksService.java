@@ -27,14 +27,16 @@ public class BooksService implements IBooksInterface {
 	private IAuthorRepository authorRepo;
 	private IBookMapper mapper;
 	private IAuthorMapper authorMapper;
+	private IAuthorInterface authorService;
 	
 	
-	public BooksService(IBooksRepository bookRepo, IBookMapper mapper, IAuthorRepository authorRepo, IAuthorMapper authorMapper) {
+	public BooksService(IBooksRepository bookRepo, IBookMapper mapper, IAuthorRepository authorRepo, IAuthorMapper authorMapper,IAuthorInterface authorService) {
 		super();
 		this.bookRepo = bookRepo;
 		this.mapper = mapper;
 		this.authorRepo = authorRepo;
 		this.authorMapper = authorMapper;
+		this.authorService = authorService;
 	}
 
 
@@ -44,7 +46,7 @@ public class BooksService implements IBooksInterface {
 			return new ResponseDTO<BookDTO>(null,409,erreurs);
 		}
 		Book book = mapper.BookFormToBook(bookForm);
-		authorRepo.save(book.getAuthor());
+		book.setAuthor(authorService.getAuthorById(bookForm.getAuthor_id()));
 		BookDTO bookDTO = mapper.BookToBookDTO(bookRepo.save(book));
 		bookDTO.setAuthorDTO(authorMapper.AuthorToAuthorDTO(book.getAuthor()));
 		return new ResponseDTO<BookDTO>(bookDTO,201,"Created");

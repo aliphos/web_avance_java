@@ -15,6 +15,8 @@ public interface IAuthorInterface {
 	 public List<AuthorDTO> getAllUsers();
 	 public Author getAuthorById(long id);
 	 public AuthorDTO getAuthorDTOById(long id);
+	 public ResponseDTO<String> deleteAuthorById(long id);
+	 public ResponseDTO<AuthorDTO> updateAuthor(Author authormodified, BindingResult bindingResult);
 	 String checkErreur(BindingResult bindingResult);
 
 }

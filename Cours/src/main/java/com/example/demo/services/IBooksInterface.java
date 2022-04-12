@@ -13,6 +13,8 @@ public interface IBooksInterface {
 	public ResponseDTO<BookDTO> saveBook(BookForm bookForm, BindingResult bindingResult);
 	public List<BookDTO> getAllBooks();
 	public BookDTO getBookDTOById(long id);
+	public ResponseDTO<String> deleteBookById(long id);
+	public ResponseDTO<BookDTO> updateBook(BookForm bookModified, BindingResult bindingResult);
 	String checkErreur(BindingResult bindingResult);
 
 }

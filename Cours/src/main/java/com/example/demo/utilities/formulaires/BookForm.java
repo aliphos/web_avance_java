@@ -12,8 +12,42 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @Builder
 public class BookForm {
+
+	private long id;
 	@NotEmpty(message = "Paramètres non renseigné")
-	private String nom_livre;
+	private String nom;
 	private long nb_exemplaires;
-	private long author_id;
+	private long id_auteur;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public long getNb_exemplaires() {
+		return nb_exemplaires;
+	}
+
+	public void setNb_exemplaires(long nb_exemplaires) {
+		this.nb_exemplaires = nb_exemplaires;
+	}
+
+	public long getId_auteur() {
+		return id_auteur;
+	}
+
+	public void setId_auteur(long id_auteur) {
+		this.id_auteur = id_auteur;
+	}
 }

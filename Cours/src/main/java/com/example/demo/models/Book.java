@@ -20,12 +20,12 @@ public class Book {
     @Column(name = "ID_LIVRE",nullable = false , unique = true)
     private long id;
     @Column(name = "LL_LIVRE")
-    private String nom_livre;
+    private String nom;
     @Column(name = "NB_EXEMPLAIRE")
     private long nb_exemplaires;
     @ManyToOne
 	@JoinColumn(name="id_author")
-    private Author author;
+    private Author auteur;
 
 
 	public long getId() {
@@ -36,12 +36,12 @@ public class Book {
 		this.id = id;
 	}
 
-	public String getNom_livre() {
-		return nom_livre;
+	public String getNom() {
+		return nom;
 	}
 
-	public void setNom_livre(String nom_livre) {
-		this.nom_livre = nom_livre;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	public long getNb_exemplaires() {
@@ -53,10 +53,10 @@ public class Book {
 	}
 
 	public Author getAuthor() {
-		return author;
+		return auteur;
 	}
 
-	public void setAuthor(Author author) {
-		this.author = author;
+	public void setAuthor(Author auteur) {
+		this.auteur = auteur;
 	}
 }

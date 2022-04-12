@@ -14,6 +14,8 @@ import com.example.demo.repositories.IAuthorRepository;
 import com.example.demo.utilities.DTO.ResponseDTO;
 import com.example.demo.utilities.formulaires.AuthorForm;
 
+import javax.validation.constraints.Null;
+
 @Service
 public class AuthorService implements IAuthorInterface {
 	private IAuthorRepository userRepo;
@@ -25,22 +27,42 @@ public class AuthorService implements IAuthorInterface {
 		this.mapper = mapper;
 	}
 	
-	public ResponseDTO<AuthorDTO> saveAuthor(AuthorForm userForm, BindingResult bindingResult) {
+	public ResponseDTO<AuthorDTO> saveAuthor(AuthorForm authorForm, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			String erreurs = checkErreur(bindingResult);
 			return new ResponseDTO<AuthorDTO>(null,409,erreurs);
 		}
-		Author user = mapper.AuthorFormToAuthor(userForm);
-		AuthorDTO userDTO = mapper.AuthorToAuthorDTO(userRepo.save(user));
-	    return new ResponseDTO<AuthorDTO>(userDTO,201,"Created");
+		Author author = mapper.AuthorFormToAuthor(authorForm);
+		AuthorDTO authorDTO = mapper.AuthorToAuthorDTO(userRepo.save(author));
+	    return new ResponseDTO<AuthorDTO>(authorDTO,201,"Created");
 	}
 	public void saveAuthor(Author user) {
 		userRepo.save(user);
+	}
+
+	public ResponseDTO<AuthorDTO> updateAuthor(Author authormodified, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			String erreurs = checkErreur(bindingResult);
+			return new ResponseDTO<AuthorDTO>(null,409,erreurs);
+		}
+
+		Author author = userRepo.getById(authormodified.getId());
+		author.setNom(authormodified.getNom());
+		author.setPrenom(authormodified.getPrenom());
+
+		AuthorDTO authorDTO = mapper.AuthorToAuthorDTO(userRepo.save(author));
+		return new ResponseDTO<AuthorDTO>(authorDTO,201,"Updated");
 	}
 	
 	public List<AuthorDTO> getAllUsers(){
 		return userRepo.findAll().stream().map(user->mapper.AuthorToAuthorDTO(user)).collect(Collectors.toList());
 		
+	}
+
+	public ResponseDTO<String> deleteAuthorById(long id){
+		userRepo.delete(userRepo.getById(id));
+		return new ResponseDTO<String>("",201,"L'auteur a bien été supprimé.");
+
 	}
 
 	
@@ -52,6 +74,7 @@ public class AuthorService implements IAuthorInterface {
 		return userRepo.findById(id).get();
 		
 	}
+
 	public String checkErreur(BindingResult bindingResult) {
 		
 		String retour = "";

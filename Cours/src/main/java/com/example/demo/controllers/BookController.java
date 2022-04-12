@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.util.List;
 
+import com.example.demo.models.Book;
 import com.example.demo.utilities.DTO.BookDTO;
 import com.example.demo.utilities.DTO.ResponseDTO;
 import com.example.demo.utilities.formulaires.BookForm;
@@ -26,22 +27,34 @@ public class BookController {
 	}
 
 	@ApiOperation(value = "Créer un nouveau Livre")
-	@PostMapping("/books")
+	@PostMapping("/api/books")
 	public ResponseDTO<BookDTO> saveBook(@Valid @RequestBody BookForm bookForm, BindingResult bindingResult) {
 		return service.saveBook(bookForm,bindingResult);
 	}
 
 	@ApiOperation(value = "Récupérer l'ensemble des auteurs")
-	@GetMapping("/books")
+	@GetMapping("/api/books")
 	public List<BookDTO> getAllBooks(){
 		return service.getAllBooks();
 
 	}
 	@ApiOperation(value = "Récupérer un auteur via son identifiant")
-	@GetMapping("/books/{id}")
+	@GetMapping("/api/books/{id}")
 	public BookDTO getBookById(@Valid @PathVariable int id){
 		return service.getBookDTOById(id);
 
+	}
+
+	@ApiOperation(value = "Supprimer un livre via son identifiant")
+	@DeleteMapping("/api/books/{id}")
+	public ResponseDTO<String> deleteBookById(@PathVariable @Valid int id){
+		return service.deleteBookById((long)id);
+
+	}
+	@ApiOperation(value = "Modifier un  Livre")
+	@PutMapping("/api/books")
+	public ResponseDTO<BookDTO> updateBook(@Valid @RequestBody BookForm book, BindingResult bindingResult) {
+		return service.updateBook(book,bindingResult);
 	}
 	
 }

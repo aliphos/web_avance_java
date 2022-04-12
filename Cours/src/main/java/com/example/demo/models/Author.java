@@ -16,7 +16,7 @@ public class Author {
 	private String nom;
 	@Column(name = "LL_PRENOM", nullable = true)
 	private String prenom;
-	@OneToMany(mappedBy="author",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="auteur", cascade = CascadeType.REMOVE)
 	private List<Book> books;
 
 
